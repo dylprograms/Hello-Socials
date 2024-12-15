@@ -1,4 +1,6 @@
-import express from 'express';
+import { Router } from 'express';
+const router = Router();
+
 import {
   getAllThoughts,
   getThoughtById,
@@ -9,16 +11,9 @@ import {
   removeReaction,
 } from '../../controllers/thoughtControls';
 
-const router = express.Router();
-
 router.route('/').get(getAllThoughts).post(createThought);
+router.route('/:thoughtId').get(getThoughtById).put(updateThought).delete(deleteThought);
+router.route('/:thoughtId/reactions').post(addReaction);
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 
-router
-  .route('/:thoughtId')
-  .get(getThoughtById)
-  .put(updateThought)
-  .delete(deleteThought);
-
-router.route('/:thoughtId/reactions').post(addReaction).delete(removeReaction);
-
-export default router;
+export { router as thoughtRoutes };

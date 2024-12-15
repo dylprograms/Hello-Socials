@@ -1,7 +1,6 @@
-import Thought from '../models/userThoughts';
-import User from '../models/User';
-
-export const getAllThoughts = async (req, res) => {
+import { Request, Response } from 'express';
+import { Thought, User } from '../models/index.js';
+export const getAllThoughts = async (_req: Request, res: Response) => {
   try {
     const thoughts = await Thought.find();
     res.json(thoughts);
@@ -10,7 +9,7 @@ export const getAllThoughts = async (req, res) => {
   }
 };
 
-export const getThoughtById = async (req, res) => {
+export const getThoughtById = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findById(req.params.thoughtId);
     res.json(thought || { message: 'Thought not found' });
@@ -19,7 +18,7 @@ export const getThoughtById = async (req, res) => {
   }
 };
 
-export const createThought = async (req, res) => {
+export const createThought = async (req: Request, res: Response) => {
   try {
     const { thoughtText, username, userId } = req.body;
     const thought = await Thought.create({ thoughtText, username });
@@ -38,7 +37,7 @@ export const createThought = async (req, res) => {
   }
 };
 
-export const updateThought = async (req, res) => {
+export const updateThought = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findByIdAndUpdate(
       req.params.thoughtId,
@@ -51,7 +50,7 @@ export const updateThought = async (req, res) => {
   }
 };
 
-export const deleteThought = async (req, res) => {
+export const deleteThought = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findByIdAndDelete(req.params.thoughtId);
     if (!thought) {
@@ -68,7 +67,7 @@ export const deleteThought = async (req, res) => {
   }
 };
 
-export const addReaction = async (req, res) => {
+export const addReaction = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findByIdAndUpdate(
       req.params.thoughtId,
@@ -81,7 +80,7 @@ export const addReaction = async (req, res) => {
   }
 };
 
-export const removeReaction = async (req, res) => {
+export const removeReaction = async (req: Request, res: Response) => {
   try {
     const thought = await Thought.findByIdAndUpdate(
       req.params.thoughtId,
